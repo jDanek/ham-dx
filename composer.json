@@ -1,0 +1,25 @@
+{
+  "name": "toolia/ham-dx",
+  "description": "A utility for working with the Maidenhead grid system",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jiří Daněk",
+      "email": "jirka.danek@jdanek.eu",
+      "homepage": "https://jdanek.eu",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Toolia\\HamDx\\": "src"
+    }
+  }
+}
