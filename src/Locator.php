@@ -115,7 +115,7 @@ class Locator
     /**
      * @param string $qth
      */
-    function setQth(string $qth): void
+    function setQth(string $qth)
     {
         $this->qth = $qth;
     }
@@ -148,7 +148,7 @@ class Locator
      * @param float $lat
      * @param float $lon
      */
-    function setCoords(float $lat, float $lon): void
+    function setCoords(float $lat, float $lon)
     {
         $this->coords = [$lat, $lon];
     }
@@ -156,7 +156,7 @@ class Locator
     /**
      * @param array $coords
      */
-    function setCoordsArr(array $coords): void
+    function setCoordsArr(array $coords)
     {
         if (count($coords) === 2) {
             $this->setCoords((float)$coords[0], (float)$coords[1]);

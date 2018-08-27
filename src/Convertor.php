@@ -26,7 +26,7 @@ class Convertor
     }
 
     /**
-     * @param $number
+     * @param float $number
      * @param int $precision
      * @return float
      */
@@ -39,7 +39,7 @@ class Convertor
 
     /**
      * Convert QTH Maidenhead Grid locator to lat/lon
-     * Help & inspiration: http://radio.snezka.net
+     * Help and inspiration: http://radio.snezka.net
      *
      * @param string $locator
      * @return array [latitude, longitude]
@@ -58,18 +58,18 @@ class Convertor
         $lon = -180.0;
         $lat = -90.0;
 
-        $lon += ($flip[$locator[0]] * 20) // fields
-            + ($locator[2] * 2) // squares
-            + ($flip[$locator[4]] / 12) // subsquares
-            + ($locator[6] / 120) // extended square
-            + ($flip[$locator[8]] / 2880) // extended subsquare
+        $lon += ((int)$flip[$locator[0]] * 20) // fields
+            + ((int)$locator[2] * 2) // squares
+            + ((int)$flip[$locator[4]] / 12) // subsquares
+            + ((int)$locator[6] / 120) // extended square
+            + ((int)$flip[$locator[8]] / 2880) // extended subsquare
             + 0.000174; // center
 
-        $lat += ($flip[$locator[1]] * 10) // fields
-            + ($locator[3]) // squares
-            + ($flip[$locator[5]] / 24) // subsquares
-            + ($locator[7] / 240) // extended square
-            + ($flip[$locator[9]] / 5760) // extended subsquare
+        $lat += ((int)$flip[$locator[1]] * 10) // fields
+            + ((int)$locator[3]) // squares
+            + ((int)$flip[$locator[5]] / 24) // subsquares
+            + ((int)$locator[7] / 240) // extended square
+            + ((int)$flip[$locator[9]] / 5760) // extended subsquare
             + 0.0000868; // center
 
         return [$lat, $lon];
@@ -77,7 +77,7 @@ class Convertor
 
     /**
      * Convert lat/lon to QTH Maidenhead Grid locator
-     * Help & inspiration: http://radio.snezka.net
+     * Help and inspiration: http://radio.snezka.net
      *
      * @param float $lat
      * @param float $lon
@@ -85,16 +85,23 @@ class Convertor
      */
     function coordsToQth(float $lat, float $lon): string
     {
-        return $this->valid_chars[floor(($lon + 180) / 20)]
-            . $this->valid_chars[floor(($lat + 90) / 10)]
-            . floor(fmod(($lon + 180) / 2, 10))
-            . floor(fmod($lat + 90, 10))
-            . $this->valid_chars[floor(fmod(($lon + 180) * 12, 24))]
-            . $this->valid_chars[floor(fmod(($lat + 90) * 24, 24))]
-            . floor(fmod(($lon + 180) * 120, 10))
-            . floor(fmod(($lat + 90) * 240, 10))
-            . strtolower($this->valid_chars[floor(fmod(($lon + 180) * 2880, 24))])
-            . strtolower($this->valid_chars[floor(fmod(($lat + 90) * 5760, 24))]);
+        return implode('', [
+            // field
+            (string)$this->valid_chars[(int)floor(($lon + 180) / 20)],
+            (string)$this->valid_chars[(int)floor(($lat + 90) / 10)],
+            // square
+            (string)floor(fmod(($lon + 180) / 2, 10)),
+            (string)floor(fmod($lat + 90, 10)),
+            // subsquare
+            (string)$this->valid_chars[(int)floor(fmod(($lon + 180) * 12, 24))],
+            (string)$this->valid_chars[(int)floor(fmod(($lat + 90) * 24, 24))],
+            // extended square
+            (string)floor(fmod(($lon + 180) * 120, 10)),
+            (string)floor(fmod(($lat + 90) * 240, 10)),
+            // extended subsquare
+            (string)$this->valid_chars[(int)floor(fmod(($lon + 180) * 2880, 24))],
+            (string)$this->valid_chars[(int)floor(fmod(($lat + 90) * 5760, 24))],
+        ]);
     }
 
     /**
@@ -102,7 +109,7 @@ class Convertor
      *
      * @param float $lat
      * @param float $lon
-     * @return array[lat, lon]
+     * @return array [lat, lon]
      */
     function coordsToDms(float $lat, float $lon): array
     {
@@ -122,7 +129,7 @@ class Convertor
     function decimalToDms(float $decimal, bool $isLatitude = true): array
     {
         $exploded = explode(".", (string)$decimal);
-        $temp = '0.' . (isset($exploded[1]) ? $exploded[1] : 0);
+        $temp = (isset($exploded[1]) ? (float)('0.' . $exploded[1]) : 0.0);
 
         $temp *= 3600;
         $deg = (float)$exploded[0];
