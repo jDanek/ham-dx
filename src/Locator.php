@@ -193,7 +193,7 @@ class Locator
     function azimuth(Locator $locator2): float
     {
         $comparator = new Comparator();
-        return $comparator->azimut(
+        return $comparator->azimuth(
             $this->getLatitude(),
             $this->getLongitude(),
             $locator2->getLatitude(),

@@ -36,16 +36,21 @@ class Comparator
      * @param float $lon2
      * @return float
      */
-    function azimut(float $lat1, float $lon1, float $lat2, float $lon2): float
+    function azimuth(float $lat1, float $lon1, float $lat2, float $lon2): float
     {
         $lat1 = deg2rad($lat1);
         $lon1 = deg2rad($lon1);
         $lat2 = deg2rad($lat2);
         $lon2 = deg2rad($lon2);
+		
+		// compare identical inputs
+        if ($lat1 === $lat2 && $lon1 === $lon2) {
+            return 0.0;
+        }
 
         $lonDelta = $lon2 - $lon1;
-        $azimut = rad2deg(atan(sin($lonDelta) * cos($lat2) / (sin($lat2) * cos($lat1) - cos($lat2) * sin($lat1) * cos($lonDelta))));
-        $azimut = ($lat1 > $lat2 ? (180.0 + $azimut) : $azimut);
-        return $azimut;
+        $azimuth = rad2deg(atan(sin($lonDelta) * cos($lat2) / (sin($lat2) * cos($lat1) - cos($lat2) * sin($lat1) * cos($lonDelta))));
+        $azimuth = ($lat1 > $lat2 ? (180.0 + $azimuth) : $azimuth);
+        return $azimuth;
     }
 }
