@@ -50,7 +50,7 @@ class Comparator
 
         $lonDelta = $lon2 - $lon1;
         $azimuth = rad2deg(atan(sin($lonDelta) * cos($lat2) / (sin($lat2) * cos($lat1) - cos($lat2) * sin($lat1) * cos($lonDelta))));
-        $azimuth = ($lat1 > $lat2 ? (180.0 + $azimuth) : $azimuth);
+        $azimuth = (($lat1 > $lat2 ? 180.0 : 360.0) + $azimuth);
         return $azimuth;
     }
 }
