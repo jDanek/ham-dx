@@ -1,25 +1,31 @@
 {
-  "name": "toolia/ham-dx",
+  "name": "danek/ham-dx",
   "description": "A utility for working with the Maidenhead grid system",
+  "keywords": ["qth", "maidenhead", "maidenhead-locator", "locator system", "ham", "dx", "cb"],
   "license": "MIT",
   "authors": [
     {
       "name": "Jiří Daněk",
-      "email": "jirka.danek@jdanek.eu",
       "homepage": "https://jdanek.eu",
       "role": "Developer"
     }
   ],
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.1",
+    "mjaschen/phpgeo": "^2.6.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7"
+    "phpunit/phpunit": "^9"
   },
   "autoload": {
     "psr-4": {
-      "Toolia\\HamDx\\": "src"
+      "HamDx\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HamDx\\": "tests"
     }
   }
 }
